@@ -10,3 +10,6 @@ assertion data.
 The `PSG_DELETE_WHITE_LIST` list in the class is used to ensure the class only deletes permission set group 
 assignments we have whitelisted i.e. not permission set groups assigned manually in the org.
 
+Note: The MyJitHandler.cls utilizes custom Azure AD claims as its claim types. It is advised that you make the necessary modifications to http://schemas.xmlsoap.org/ws/2005/05/identity/claims/* to match your SAML provider's attribute requirements and availability. 
+
+One method for identifying your claim types is to analyze the SAML response assertion using a SAML decoder, such as https://developer.pingidentity.com/en/tools/saml-decoder.html.
