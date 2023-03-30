@@ -13,3 +13,10 @@ assignments we have whitelisted i.e. not permission set groups assigned manually
 Note: The MyJitHandler.cls utilizes custom Azure AD claims as its claim types. It is advised that you make the necessary modifications to http://schemas.xmlsoap.org/ws/2005/05/identity/claims/* to match your SAML provider's attribute requirements and availability. 
 
 One method for identifying your claim types is to analyze the SAML response assertion using a SAML decoder, such as https://developer.pingidentity.com/en/tools/saml-decoder.html.
+
+The standard Salesforce accepted claims are listed here and does not support Permission Set &/ Permission Set Group assignments: https://help.salesforce.com/s/articleView?language=en_US&id=sf.sso_jit_requirements.htm&type=5
+Example:
+User.Username
+User.Email
+User.LastName
+User. ProfileId
