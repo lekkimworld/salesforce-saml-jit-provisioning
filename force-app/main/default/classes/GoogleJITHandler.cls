@@ -1,4 +1,9 @@
 public class GoogleJITHandler extends AbstractJITHandler {
+    public static final String CLAIM_LASTNAME = 'User.LastName';
+    public static final String CLAIM_USERNAME = 'User.Username';
+    public static final String CLAIM_EMAIL = 'User.Email';
+    public static final String CLAIM_PERMISSIONSET_GROUPS = 'PSG';
+    public static final String CLAIM_PROFILE_ID = 'User.ProfileId';
     
     public User createUser(Id samlSsoProviderId, Id communityId, Id portalId, String federationId, Map<String,String> attributes, String assertion) {
         // see if we have user based on federation id
@@ -12,9 +17,9 @@ public class GoogleJITHandler extends AbstractJITHandler {
         String now = String.valueOf(DateTime.now().getTime());
         String alias = now.substring(now.length()-8);
         final User u = new User();
-        u.lastname = attributes.get('User.LastName');
-        u.username = attributes.get('User.Username');
-        u.email = attributes.get('User.Email');
+        u.lastname = attributes.get(CLAIM_LASTNAME);
+        u.username = attributes.get(CLAIM_USERNAME);
+        u.email = attributes.get(CLAIM_EMAIL);
         u.ProfileId = profileId;
         u.IsActive = true;
         u.EmailEncodingKey = DEFAULT_EMAIL_ENCODING;
@@ -25,7 +30,7 @@ public class GoogleJITHandler extends AbstractJITHandler {
         INSERT u;
 
         // maintain permission set group assignments
-        final String permissionSetGroups = attributes.get('User.PSG');
+        final String permissionSetGroups = attributes.get(CLAIM_PERMISSIONSET_GROUPS);
         this.maintainPermissionSetGroupAssignments(u.Id, permissionSetGroups);
 
         // return
@@ -40,9 +45,9 @@ public class GoogleJITHandler extends AbstractJITHandler {
         final String profileId = this.getProfileId(attributes);
         
         // update user fields based on the SAML attributes
-        u.lastname = attributes.get('User.LastName');
-        u.username = attributes.get('User.Username');
-        u.email = attributes.get('User.Email');
+        u.lastname = attributes.get(CLAIM_LASTNAME);
+        u.username = attributes.get(CLAIM_USERNAME);
+        u.email = attributes.get(CLAIM_EMAIL);
         u.ProfileId = profileId;
 
         
@@ -50,13 +55,13 @@ public class GoogleJITHandler extends AbstractJITHandler {
         UPDATE u;
 
         // maintain permission set group assignments
-        final String permissionSetGroups = attributes.get('User.PSG');
+        final String permissionSetGroups = attributes.get(CLAIM_PERMISSIONSET_GROUPS);
         this.maintainPermissionSetGroupAssignments(u.Id, permissionSetGroups);
     }
 
     private String getProfileId(Map<String,String> attributes) {
         // get profile if ID not supplied
-        String profileId = attributes.get('User.ProfileId');
+        String profileId = attributes.get(CLAIM_PROFILE_ID);
         if (String.isEmpty(profileId)) {
             final Profile p = [SELECT Id FROM Profile WHERE Name =: DEFAULT_PROFILE_NAME LIMIT 1];    
             profileId = p.Id;
