@@ -20,6 +20,7 @@ public class GoogleJITHandler extends AbstractJITHandler {
         u.lastname = attributes.get(CLAIM_LASTNAME);
         u.username = attributes.get(CLAIM_USERNAME);
         u.email = attributes.get(CLAIM_EMAIL);
+        u.FederationIdentifier = federationId;
         u.ProfileId = profileId;
         u.IsActive = true;
         u.EmailEncodingKey = DEFAULT_EMAIL_ENCODING;
@@ -49,6 +50,7 @@ public class GoogleJITHandler extends AbstractJITHandler {
         u.username = attributes.get(CLAIM_USERNAME);
         u.email = attributes.get(CLAIM_EMAIL);
         u.ProfileId = profileId;
+        u.FederationIdentifier = federationId;
 
         
         // save the updated user
